@@ -1,0 +1,149 @@
+﻿@page "/calculator"
+@inject IJSRuntime JSRuntime
+
+
+<div class="container">
+    <h1>SavingsTarget Calculator</h1>
+
+    <form id="savings-form" >
+        <div class="form-group">
+            <label for="goal">Select Savings Goal:</label>
+            <select id="goal" required>
+                <option value="">Choose a goal</option>
+                <option value="car">Car</option>
+                <option value="house">House</option>
+                <option value="vacation">Vacation</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <div id="other-goal-container" class="form-group hidden">
+            <label for="other-goal">Specify Your Goal:</label>
+            <input type="text" id="other-goal" placeholder="Enter your savings goal">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Desired Price of the Goal:</label>
+            <div class="input-wrapper">
+                <span class="dollar-sign">$</span>
+                <input type="number" id="price" placeholder="Enter amount" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="income">Monthly Income:</label>
+            <div class="input-wrapper">
+                <span class="dollar-sign">$</span>
+                <input type="number" id="income" placeholder="Enter monthly income" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="expenses">Monthly Expenses:</label>
+            <div class="input-wrapper">
+                <span class="dollar-sign">$</span>
+                <input type="number" id="expenses" placeholder="Enter monthly expenses" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="existing-loan">Do you have an existing loan?</label>
+            <select id="existing-loan" required>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+
+        <div id="existing-loan-details" class="hidden">
+            <div class="form-group">
+                <label for="existing-loan-amount">Existing Loan Amount:</label>
+                <div class="input-wrapper">
+                    <span class="dollar-sign">$</span>
+                    <input type="number" id="existing-loan-amount" placeholder="Enter loan amount">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="existing-loan-monthly-payment">Monthly Loan Payment:</label>
+                <div class="input-wrapper">
+                    <span class="dollar-sign">$</span>
+                    <input type="number" id="existing-loan-monthly-payment" placeholder="Enter monthly payment">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="existing-loan-interest">Loan Interest Rate (%):</label>
+                <input type="number" id="existing-loan-interest" placeholder="Enter interest rate" step="0.1">
+            </div>
+
+            <div class="form-group">
+                <label for="existing-loan-term">Loan Term (months):</label>
+                <input type="number" id="existing-loan-term" placeholder="Enter loan term in months">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="new-loan">Will you take a loan to purchase what you're saving for?</label>
+            <select id="new-loan" required>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+
+        <div id="new-loan-details" class="hidden">
+            <div class="form-group">
+                <label for="new-loan-amount">New Loan Amount:</label>
+                <div class="input-wrapper">
+                    <span class="dollar-sign">$</span>
+                    <input type="number" id="new-loan-amount" placeholder="Enter loan amount">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="new-loan-interest">New Loan Interest Rate (%):</label>
+                <input type="number" id="new-loan-interest" placeholder="Enter interest rate" step="0.1">
+            </div>
+
+            <div class="form-group">
+                <label for="new-loan-term">Loan Term (months):</label>
+                <input type="number" id="new-loan-term" placeholder="Enter loan term in months">
+            </div>
+        </div>
+
+        <button type="submit">Calculate</button>
+    </form>
+    <!-- Modal Structure -->
+    <div id="resultsModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="savings-goal"></h2>
+            <p id="monthly-savings"></p>
+            <p id="months-to-save"></p>
+            <p id="existing-loan-info"></p>
+            <p id="new-loan-info"></p>
+        </div>
+    </div>
+
+    <div id="results" class="hidden">
+        <h2>Results</h2>
+        <p id="savings-goal"></p>
+        <p id="monthly-savings"></p>
+        <p id="months-to-save"></p>
+        <p id="existing-loan-info"></p>
+        <p id="new-loan-info"></p>
+        <div class="button-group">
+            <button id="recalculate">Calculate Again</button>
+            <button id="read-blog">Read Blog Articles</button>
+        </div>
+    </div>
+</div>
+
+@code{
+    private IJSObjectReference _jSObject;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _jSObject = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/calculator.js");
+        await _jSObject.InvokeVoidAsync("initializedCalculator");
+    }
+ }

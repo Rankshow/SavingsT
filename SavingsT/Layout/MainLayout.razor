@@ -1,0 +1,29 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+
+
+<NavMenu />
+    <main>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+
+
+@code {
+    private IJSObjectReference _jSObject;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _jSObject = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/scripts.js");
+        await _jSObject.InvokeVoidAsync("initializeScript");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_jSObject != null)
+        {
+            await _jSObject.DisposeAsync();
+        }
+    }
+}
