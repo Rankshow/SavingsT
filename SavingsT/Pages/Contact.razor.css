@@ -45,21 +45,21 @@ body {
         display: flex;
     }
 
-        .navbar ul li {
-            margin-left: 1.5rem;
-        }
+    .navbar ul li {
+        margin-left: 1.5rem;
+    }
 
-            .navbar ul li a {
-                color: #fff;
-                text-decoration: none;
-                font-weight: 600;
-                transition: color 0.3s ease-in-out;
-            }
+    .navbar ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease-in-out;
+    }
 
-                .navbar ul li a:hover,
-                .navbar ul li a.active {
-                    color: #32e875;
-                }
+    .navbar ul li a:hover,
+    .navbar ul li a.active {
+        color: #32e875;
+    }
 
 /* Contact Section Styles */
 .contact-container {
