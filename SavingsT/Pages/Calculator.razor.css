@@ -153,6 +153,7 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #1c1c44;
+    color: azure;
 }
 
 .hidden {
